@@ -107,7 +107,7 @@ def teacher_screen_register():
 
     with c2:
         if st.button("Go back to Home", type="secondary", key="register_back_btn", shortcut="control+backspace"):
-            st.session_state['login_state'] = "login"
+            st.session_state['login_type'] = None
             st.rerun()
 
 

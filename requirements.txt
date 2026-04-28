@@ -12,6 +12,7 @@ setuptools
 
 # Database
 supabase
+
 # For hashing methods
 bcrypt   
 
@@ -22,7 +23,12 @@ segno
 pillow
 
 # Basic frontend library for deployment
-streamlit
+streamlitn
+
+# Audio recognition and computations
+librosa
+resemblyzer
+
 
 
 
