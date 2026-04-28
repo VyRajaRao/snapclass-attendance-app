@@ -9,15 +9,15 @@ def load_voice_encoder():
     return VoiceEncoder()
 
 
-def get_voice_embedding(audio_bytes):
+def get_voice_embeddings(audio_bytes):
     try:
         encoder = load_voice_encoder()
 
-        audio, sr = librosa.load(io.BytesIo(audio_bytes), sr=16000)  # sr => sample rate
+        audio, sr = librosa.load(io.BytesIO(audio_bytes), sr=16000)  # sr => sample rate
         wav = preprocess_wav(audio)
 
         embedding = encoder.embed_utterance(wav)
-        return embedding.toList() # 256-dimensional embedding as list for easier storage in database
+        return embedding.tolist() # 256-dimensional embedding as list for easier storage in database
     except Exception as e:
         st.error("Voice recognition error")
         return None 
