@@ -6,8 +6,10 @@ from src.components.header import header_dashboard
 from src.components.footer import footer_dashboard
 
 from src.database.db import check_teacher_exists, create_teacher, teacher_login, get_all_students, get_teacher_subjects
-from src.components.dialogue_create_subject import create_subject_dialogue, share_subject_dialogue
+from src.components.dialogue_create_subject import create_subject_dialogue
+from src.components.dialogue_share_subject import share_subject_dialogue
 from src.components.subject_card import subject_card
+
 
 def teacher_screen():
 
@@ -30,7 +32,7 @@ def teacher_dashboard():
 
     with c2:
         st.header(f"""Welcome, {teacher_data['name']}""")
-        if st.button("Go back to Home", type="secondary", key="login_back_btn", shortcut="control+backspace"):
+        if st.button("Logout", type="secondary", key="login_back_btn", shortcut="control+backspace"):
             st.session_state['is_logged_in'] = False
             del st.session_state['teacher_data']
             st.rerun()

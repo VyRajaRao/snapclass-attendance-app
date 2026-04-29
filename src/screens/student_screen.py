@@ -6,14 +6,44 @@ from PIL import Image
 
 from src.pipelines.face_pipeline import predict_attendance, get_face_embeddings, train_classifier
 from src.pipelines.voice_pipeline import get_voice_embeddings
-from src.database.db import get_all_students, create_student
+from src.database.db import get_all_students, create_student, get_student_subjects, get_student_attendance
 import numpy as np
 import time
 
-
+from src.components.dialogue_enroll import enroll_dialogue
 
 def student_dashboard():
-    st.header(f"Welcome, {st.session_state.student_data['name']}!", text_alignment="center")
+    student_data = st.session_state.student_data
+    student_id = student_data['student_id']
+    c1, c2 = st.columns(2, vertical_alignment='center', gap='xxlarge')
+
+    with c1:
+        header_dashboard()
+
+    with c2:
+        st.header(f"""Welcome, {student_data['name']}""")
+        if st.button("Logout", type="secondary", key="login_back_btn", shortcut="control+backspace"):
+            st.session_state['is_logged_in'] = False
+            del st.session_state['student_data']
+            st.rerun()
+
+    st.space()
+
+    c1, c2 = st.columns(2)
+    with c1:
+        st.header("Your Enrolled Subjects")
+
+    with c2:
+        if st.button("Enroll in Subject", type="primary", width="stretch"):
+            enroll_dialogue()
+
+    st.divider()
+
+    with st.spinner("Loading your enrolled subjects..."):
+        subjects = get_student_subjects(student_id)
+        logs = get_student_attendance(student_id)
+
+    footer_dashboard()
 
 
 def student_screen():
@@ -31,7 +61,7 @@ def student_screen():
         header_dashboard()
 
     with c2:
-        if st.button("Go back to Home", type="secondary", key="login_back_btn", shortcut="control+backspace"):
+        if st.button("Logout", type="secondary", key="login_back_btn", shortcut="control+backspace"):
             st.session_state['login_type'] = None
             st.rerun()
 
