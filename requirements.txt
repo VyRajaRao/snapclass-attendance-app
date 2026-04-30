@@ -11,7 +11,8 @@ dlib-bin
 
 # For face recognition models
 git+https://github.com/ageitgey/face_recognition_models
-setuptools
+setuptools==69.5.1
+setuptools-scm
 
 # Database
 supabase
