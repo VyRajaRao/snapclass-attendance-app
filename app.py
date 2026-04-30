@@ -6,6 +6,25 @@ from src.screens.teacher_screen import teacher_screen
 
 from src.components.dialogue_auto_enroll import auto_enroll_dialogue
 
+
+st.set_page_config(
+    page_title="SnapClass",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
+st.markdown("""
+<script>
+const setTheme = () => {
+    const root = window.parent.document.documentElement;
+    root.style.setProperty('--background-color', '#b4b6cc');
+    root.style.setProperty('--secondary-background-color', '#ffffff');
+    root.style.setProperty('--text-color', '#000000');
+};
+setTheme();
+</script>
+""", unsafe_allow_html=True)
+
 def main():
     st.set_page_config(
         page_title="SnapClass - Making Attendance faster using AI",
