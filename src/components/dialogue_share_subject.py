@@ -8,7 +8,7 @@ import io
 @st.dialog("Share Class Link")
 def share_subject_dialogue(subject_name, subject_code):
 
-    app_domain = "http://192.168.50.100:8501"
+    app_domain = "http://localhost:8501"
     join_url = f"{app_domain}/?join-code={subject_code}"
 
     st.header("Scan To Join")

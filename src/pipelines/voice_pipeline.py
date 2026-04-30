@@ -50,7 +50,7 @@ def process_bulk_audio(audio_bytes, candidates_dict, threshold=0.65):
 
         segments = librosa.effects.split(audio, top_db=30)  # Split into segments based on silence decibels
 
-        identified_results = []
+        identified_results = {}
 
         for start, end in segments:
             if (end-start) < sr * 0.5:
@@ -62,7 +62,7 @@ def process_bulk_audio(audio_bytes, candidates_dict, threshold=0.65):
             sid, score = identify_speaker(embedding, candidates_dict, threshold)
 
             if sid:
-                if sid not in identify_speaker or score > identified_results[sid]:
+                if sid not in identified_results or score > identified_results[sid]:
                     identified_results[sid] = score
 
         return identified_results

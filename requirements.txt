@@ -1,3 +1,6 @@
+# Basic frontend library for deployment
+streamlit
+
 # Utilities
 numpy
 pandas
@@ -21,9 +24,6 @@ segno
 
 # Image processing
 pillow
-
-# Basic frontend library for deployment
-streamlitn
 
 # Audio recognition and computations
 librosa
