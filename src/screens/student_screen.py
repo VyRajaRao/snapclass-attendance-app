@@ -138,7 +138,7 @@ def student_screen():
         photo_source = st.file_uploader("Choose an image file", type=["jpg", "jpeg", "png"])
 
     if photo_source:
-        img = np.array(Image.open(photo_source))
+        img = np.array(Image.open(photo_source).convert("RGB"))
 
         with st.spinner("AI is scanning...."):
             detected, all_ids, num_faces = predict_attendance(img)
