@@ -75,9 +75,6 @@ def train_classifier():
 
 
 def predict_attendance(class_image_np):
-
-    import cv2
-    class_image_np = cv2.cvtColor(class_image_np, cv2.COLOR_BGR2RGB)
     
     encodings = get_face_embeddings(class_image_np)
 
