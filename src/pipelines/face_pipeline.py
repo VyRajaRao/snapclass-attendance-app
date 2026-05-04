@@ -36,7 +36,7 @@ def get_face_embeddings(image_np):
 
         encodings.append(np.array(face_descriptor))
 
-        return encodings
+    return encodings
 
 @st.cache_resource
 def get_trained_model():
@@ -76,7 +76,13 @@ def train_classifier():
 
 def predict_attendance(class_image_np):
 
+    import cv2
+    class_image_np = cv2.cvtColor(class_image_np, cv2.COLOR_BGR2RGB)
+    
     encodings = get_face_embeddings(class_image_np)
+
+    if encodings is None or len(encodings) == 0:
+        return {}, [], 0
 
     detected_student = {}
 
@@ -96,7 +102,6 @@ def predict_attendance(class_image_np):
         if len(all_students) >= 2:
             predicted_id = int(clf.predict([encoding])[0])
         else:
-
             predicted_id = int(all_students[0])
 
         student_embedding = X_train[y_train.index(predicted_id)]
