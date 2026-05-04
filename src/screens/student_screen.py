@@ -187,8 +187,8 @@ def student_screen():
                         else:
                             st.error("Couldn't capture your facial features for registration")
 
-                    else:
-                        st.warning("Name is required to create a profile!")
+                else:
+                    st.warning("Name is required to create a profile!")
 
 
     footer_dashboard()
