@@ -10,7 +10,6 @@ def home_screen():
     style_base_layout()
     style_background_home()
     
-
     col1, col2 = st.columns(2, gap="large" )
 
     with col1:
@@ -28,3 +27,9 @@ def home_screen():
             st.session_state["login_type"] = "teacher"
             st.rerun()
     footer_home()
+    
+    st.info(
+        "**Note:** If text colors appear inverted or hard to read, please enable **Light Mode** in Device settings. \
+        This is due to streamlit css conflicts with dark mode. We recommend using light mode for the best experience. \
+        Thank you for your understanding!"
+    )
