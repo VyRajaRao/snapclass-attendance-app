@@ -30,7 +30,7 @@ def show_attendance_results(df, logs):
                     st.error(f"Error saving attendance: {str(e)}, Sync Failed")
                     st.rerun()
 
-@st.dialog("Capture or upload photos")
+@st.dialog("Attendance Results")
 def attendance_result_dialogue(df, logs):
      show_attendance_results(df, logs)
 
