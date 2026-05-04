@@ -149,38 +149,38 @@ def teacher_tab_take_attendance():
 
                             all_detected_ids.setdefault(student_id, []).append(f"Photo {idx+1}")
                     
-                    enrolled_res = supabase.table("subject_students").select("*, students(*)").eq("subject_id", selected_subject_id).execute() 
-                    enrolled_students = enrolled_res.data               
+                enrolled_res = supabase.table("subject_students").select("*, students(*)").eq("subject_id", selected_subject_id).execute() 
+                enrolled_students = enrolled_res.data               
 
-                    if not enrolled_students:
-                        st.info("No students are enrolled in this subject yet. Please ask students to enroll to start taking attendance.")
-                    else:
+                if not enrolled_students:
+                    st.info("No students are enrolled in this subject yet. Please ask students to enroll to start taking attendance.")
+                else:
 
-                        results, attendance_to_log = [], []
+                    results, attendance_to_log = [], []
 
-                        current_timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+                    current_timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
-                        for node in enrolled_students:
-                            student = node["students"]
-                            sources = all_detected_ids.get(student["student_id"], [])
+                    for node in enrolled_students:
+                        student = node["students"]
+                        sources = all_detected_ids.get(student["student_id"], [])
 
-                            is_present = len(sources) > 0
+                        is_present = len(sources) > 0
 
-                            results.append({
-                                "Name": student["name"],
-                                "ID" : student["student_id"],
-                                "Status": "✅Present" if is_present else "❌Absent",
-                                "Source": ", ".join(sources) if is_present else "N/A"
-                            })
+                        results.append({
+                            "Name": student["name"],
+                            "ID" : student["student_id"],
+                            "Status": "✅Present" if is_present else "❌Absent",
+                            "Source": ", ".join(sources) if is_present else "N/A"
+                        })
 
-                            attendance_to_log.append({
-                                "student_id": student["student_id"],
-                                "subject_id": selected_subject_id,
-                                "timestamp": current_timestamp,
-                                "is_present": bool(is_present)
-                            })
+                        attendance_to_log.append({
+                            "student_id": student["student_id"],
+                            "subject_id": selected_subject_id,
+                            "timestamp": current_timestamp,
+                            "is_present": bool(is_present)
+                        })
 
-                        attendance_result_dialogue(pd.DataFrame(results), attendance_to_log)
+                    attendance_result_dialogue(pd.DataFrame(results), attendance_to_log)
 
     with c3:
         if st.button("Voice Attendance", type="primary", width="stretch", icon=":material/mic:"):
