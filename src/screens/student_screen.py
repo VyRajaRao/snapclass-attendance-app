@@ -145,47 +145,47 @@ def student_screen():
                     st.info("Face not recognized! You might be a new student!")
                     show_registration = True
 
-        if show_registration:
-            with st.container(border=True):
-                st.header("Register new Profile")
-                new_name = st.text_input("Enter your name", placeholder="E.g. VY Raja Rao")
+    if show_registration:
+        with st.container(border=True):
+            st.header("Register new Profile")
+            new_name = st.text_input("Enter your name", placeholder="E.g. VY Raja Rao")
 
-                st.subheader("Optional : Voice Enrollment")
-                st.info("Enroll your for voice only attendance")
+            st.subheader("Optional : Voice Enrollment")
+            st.info("Enroll your for voice only attendance")
 
-                audio_data = None
+            audio_data = None
 
-                try:
-                    audio_data = st.audio_input("Record your voice for enrollment like I'm present, my name is VY Raja Rao")
-                except Exception:
-                    st.error("Audio Data failed!")
+            try:
+                audio_data = st.audio_input("Record your voice for enrollment like I'm present, my name is VY Raja Rao")
+            except Exception:
+                st.error("Audio Data failed!")
 
-                if st.button("Create Account", type="primary"):
-                    if new_name:
-                        with st.spinner("Creating Profile..."):
-                            img = np.array(Image.open(photo_source))
-                            encodings = get_face_embeddings(img)
+            if st.button("Create Account", type="primary"):
+                if new_name:
+                    with st.spinner("Creating Profile..."):
+                        img = np.array(Image.open(photo_source))
+                        encodings = get_face_embeddings(img)
 
-                            if encodings:
-                                face_emb = encodings[0].tolist()
+                        if encodings:
+                            face_emb = encodings[0].tolist()
 
-                                voice_emb = None
+                            voice_emb = None
 
-                                if audio_data:
-                                    voice_emb = get_voice_embeddings(audio_data.read())
+                            if audio_data:
+                                voice_emb = get_voice_embeddings(audio_data.read())
 
-                                response_data = create_student(new_name, face_embedding=face_emb, voice_embedding=voice_emb)
-                                if response_data:
-                                    train_classifier()
+                            response_data = create_student(new_name, face_embedding=face_emb, voice_embedding=voice_emb)
+                            if response_data:
+                                train_classifier()
 
-                                    st.session_state.is_logged_in = True
-                                    st.session_state.user_role = "student"
-                                    st.session_state.student_data = response_data[0]
-                                    st.toast(f"Profile Created, Hi {new_name}!")
-                                    time.sleep(1)
-                                    st.rerun()
-                            else:
-                                st.error("Couldn't capture your facial features for registration")
+                                st.session_state.is_logged_in = True
+                                st.session_state.user_role = "student"
+                                st.session_state.student_data = response_data[0]
+                                st.toast(f"Profile Created, Hi {new_name}!")
+                                time.sleep(1)
+                                st.rerun()
+                        else:
+                            st.error("Couldn't capture your facial features for registration")
 
                     else:
                         st.warning("Name is required to create a profile!")
