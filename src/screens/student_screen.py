@@ -133,11 +133,9 @@ def student_screen():
 
     if st.session_state.photo_tab == "camera":
         photo_source = st.camera_input("Take a Snapshot and align face in the middle")
-        st.rerun()
 
     if st.session_state.photo_tab == "upload":
         photo_source = st.file_uploader("Choose an image file", type=["jpg", "jpeg", "png"])
-        st.rerun()
 
     if photo_source:
         img = np.array(Image.open(photo_source))
